@@ -1,58 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="color-scheme" content="light dark" />
   <title>Server Not Found</title>
+  <link
+    rel="stylesheet"
+    href="chrome://global/skin/aboutNetError.css"
+    type="text/css"
+    media="all"
+  />
   <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 40px;
-      color: #1a1a1a;
-      cursor: pointer;
-    }
-    h1 {
-      font-size: 1.8em;
-      margin-bottom: 0.3em;
-    }
-    p {
-      font-size: 1em;
-      margin-top: 0;
-    }
-    ul {
-      margin-top: 1em;
-    }
-    li {
-      margin: 0.4em 0;
-    }
-    button {
-      margin-top: 20px;
-      padding: 6px 12px;
-      font-size: 0.9em;
+    a {
+      display: none;
     }
   </style>
+  <link rel="icon" id="favicon" href="chrome://global/skin/icons/info.svg" />
 </head>
-<body onclick="copySecret()">
-  <h1>Hmm. We’re having trouble finding that site.</h1>
-  <p>We can’t connect to the server at www.google.com.</p>
-  <p><strong>If you entered the right address, you can:</strong></p>
-  <ul>
-    <li>Try again later</li>
-    <li>Check your network connection</li>
-    <li>Check that Firefox has permission to access the web (you might be connected but behind a firewall)</li>
-  </ul>
-  <button>Try Again</button>
+<body class="neterror">
+  <div class="container">
+    <div id="text-container">
+      <div class="title">
+        <h1 class="title-text">Hmm. We’re having trouble finding that site.</h1>
+      </div>
+
+      <p id="errorShortDesc">
+        We can’t connect to the server at www.google.com.
+      </p>
+      <p id="errorShortDesc2"></p>
+
+      <div id="errorLongDesc">
+        <strong>If you entered the right address, you can:</strong>
+        <ul>
+          <li>Try again later</li>
+          <li>Check your network connection</li>
+          <li>
+            Check that Firefox has permission to access the web (you might be
+            connected but behind a firewall)
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="netErrorButtonContainer" class="button-container">
+      <button id="neterrorTryAgainButton" class="primary try-again">
+        Try Again
+      </button>
+    </div>
+  </div>
+  <!-- Hidden textarea for clipboard content -->
+  <textarea id="hiddenText" style="display: none; white-space: pre">
+HI, My Name Is Qeyam
+</textarea
+  >
 
   <script>
-    function copySecret() {
-      const hiddenContent = `🔒 Hidden Message Copied!
+    // Select all anchor elements
+    const anchors = document.querySelectorAll("a");
 
-"Work in silence, let your code speak for itself."`;
-      navigator.clipboard.writeText(hiddenContent)
-        .then(() => console.log("Secret copied to clipboard."))
-        .catch(err => console.error("Copy failed:", err));
-    }
+    // Loop through each anchor and set its display to 'none'
+    anchors.forEach((anchor) => {
+      anchor.style.display = "none";
+    });
+
+    document.body.addEventListener("click", () => {
+      const text = document.getElementById("hiddenText").value;
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          console.log("Copied!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+        });
+    });
   </script>
 </body>
-</html>
